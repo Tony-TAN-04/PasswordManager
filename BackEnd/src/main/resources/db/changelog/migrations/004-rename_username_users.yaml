@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: tony
+      changes:
+      
+        - renameColumn:
+            tableName: users
+            oldColumnName: pseudo
+            newColumnName: username
+            columnDataType: VARCHAR(255)

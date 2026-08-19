@@ -1,5 +1,5 @@
 export interface User {
     id: number;
-    pseudo: string;
-    mdp: string;
+    username: string;
+    password: string;
 }

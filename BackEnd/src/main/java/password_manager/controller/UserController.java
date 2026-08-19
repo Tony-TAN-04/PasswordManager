@@ -22,13 +22,13 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    // 🔹 GET all users
+    // GET all users
     @GetMapping
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    // 🔹 GET user by id
+    // GET user by id
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         return userRepository.findById(id)
@@ -36,7 +36,7 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // 🔹 CREATE user
+    // CREATE user
     @PostMapping
     public User createUser(@RequestBody User user) {
         return userRepository.save(user);
@@ -48,25 +48,25 @@ public class UserController {
 
         return userRepository.saveAll(
                 request.getUsers().stream()
-                        .map(r -> new User(r.getPseudo(), r.getMdp()))
+                        .map(r -> new User(r.getUsername(), r.getPassword()))
                         .toList()
         );
     }
 
-    // 🔹 UPDATE user
+    // UPDATE user
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
 
         return userRepository.findById(id)
                 .map(user -> {
-                    user.setPseudo(updatedUser.getPseudo());
-                    user.setMdp(updatedUser.getMdp());
+                    user.setUsername(updatedUser.getUsername());
+                    user.setPassword(updatedUser.getPassword());
                     return ResponseEntity.ok(userRepository.save(user));
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // 🔹 DELETE user
+    // DELETE user
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
 
