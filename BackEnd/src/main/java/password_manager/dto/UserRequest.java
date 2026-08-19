@@ -5,26 +5,26 @@ import jakarta.validation.constraints.Size;
 
 public class UserRequest {
 
-    @NotBlank(message = "pseudo obligatoire")
-    private String pseudo;
+    @NotBlank(message = "username is required")
+    private String username;
 
-    @NotBlank(message = "mdp obligatoire")
-    @Size(min = 4, message = "mdp trop court")
-    private String mdp;
+    @NotBlank(message = "password is required")
+    @Size(min = 4, message = "password too short")
+    private String password;
 
-    public String getPseudo() {
-        return pseudo;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getMdp() {
-        return mdp;
+    public String getPassword() {
+        return password;
     }
 
-    public void setMdp(String mdp) {
-        this.mdp = mdp;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -1,6 +1,10 @@
 package password_manager.model;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "users")
@@ -8,49 +12,61 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, unique = true)
-    private String pseudo;
+    private String username;
 
     @Column(nullable = false)
-    private String mdp;
+    private String password;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Website> websites = new ArrayList<>();
 
     // Constructeur vide obligatoire pour JPA
     public User() {
     }
 
     // Constructeur pratique
-    public User(String pseudo, String mdp) {
-        this.pseudo = pseudo;
-        this.mdp = mdp;
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     // GETTERS
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public String getPseudo() {
-        return pseudo;
+    public String getUsername() {
+        return username;
     }
 
-    public String getMdp() {
-        return mdp;
+    public String getPassword() {
+        return password;
+    }
+
+    public List<Website> getWebsites() {
+        return websites;
     }
 
     // SETTERS
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setMdp(String mdp) {
-        this.mdp = mdp;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setWebsites(List<Website> websites) {
+        this.websites = websites;
     }
 }
