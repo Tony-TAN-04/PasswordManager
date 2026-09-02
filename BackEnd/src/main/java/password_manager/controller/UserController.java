@@ -1,15 +1,24 @@
 package password_manager.controller;
 
-import password_manager.dto.UserBatchRequest;
-import password_manager.model.User;
-import password_manager.repository.UserRepository;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-
-import java.util.List;
+import password_manager.dto.UserBatchRequest;
+import password_manager.model.User;
+import password_manager.repository.UserRepository;
 
 @RestController
 @RequestMapping("/users")
@@ -17,9 +26,11 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // GET all users
@@ -39,6 +50,7 @@ public class UserController {
     // CREATE user
     @PostMapping
     public User createUser(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -48,7 +60,7 @@ public class UserController {
 
         return userRepository.saveAll(
                 request.getUsers().stream()
-                        .map(r -> new User(r.getUsername(), r.getPassword()))
+                        .map(r -> new User(r.getUsername(), passwordEncoder.encode(r.getPassword())))
                         .toList()
         );
     }
@@ -60,7 +72,7 @@ public class UserController {
         return userRepository.findById(id)
                 .map(user -> {
                     user.setUsername(updatedUser.getUsername());
-                    user.setPassword(updatedUser.getPassword());
+                    user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
                     return ResponseEntity.ok(userRepository.save(user));
                 })
                 .orElse(ResponseEntity.notFound().build());

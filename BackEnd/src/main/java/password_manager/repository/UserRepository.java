@@ -1,7 +1,12 @@
 package password_manager.repository;
 
-import password_manager.model.User;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import password_manager.model.User;
+
 public interface UserRepository extends JpaRepository<User, Long> {
+    
+    Optional<User> findByUsername(String username);
 }
