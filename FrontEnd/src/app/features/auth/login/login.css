@@ -1,0 +1,47 @@
+.login {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.login tui-loader {
+  width: 100%;
+  max-width: 500px;
+}
+
+header[tuiHeader] {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+header[tuiHeader] h1[tuiTitle] {
+  margin-inline: auto;
+  font-size: 2.5rem;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 500px;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    padding: 2rem;
+}
+
+.stack tui-textfield {
+    width: 100%;
+}
+
+.stack button {
+    width: 100%;
+    max-width: 150px;
+}

@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: tony
+      changes:
+        - createTable:
+            tableName: sync_accounts
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: provider
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: provider_user_id
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: refresh_token
+                  type: VARCHAR(255)

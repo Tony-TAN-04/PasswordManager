@@ -1,0 +1,40 @@
+<div class="login">
+    <tui-loader [loading]="isLoading" [overlay]="true" size="l">
+        <header tuiHeader>
+            <h1 tuiTitle>Connexion</h1>
+        </header>
+        <form
+            tuiForm
+            [formGroup]="loginForm"
+            (ngSubmit)="login()"
+            class="login-form"
+        >
+            <div class="stack">
+                <tui-textfield>
+                    <label tuiLabel>Nom d'utilisateur</label>
+                    <input
+                    tuiInput
+                    formControlName="username"
+                    />
+                </tui-textfield>
+
+                <tui-textfield>
+                    <label tuiLabel>Mot de passe</label>
+                    <input
+                        formControlName="password"
+                        tuiInput
+                        type="password"
+                    />
+                    <tui-icon tuiPassword />
+                </tui-textfield>
+
+                <button
+                    tuiButton
+                    type="submit"
+                    >
+                    Se connecter
+                </button>
+            </div>
+        </form>
+    </tui-loader>
+</div>

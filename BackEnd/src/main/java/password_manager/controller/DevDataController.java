@@ -1,9 +1,16 @@
 package password_manager.controller;
 
+import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.github.javafaker.Company;
 import com.github.javafaker.Faker;
-import org.springframework.context.annotation.Profile;
-import org.springframework.web.bind.annotation.*;
+
 import password_manager.model.User;
 import password_manager.model.Website;
 import password_manager.repository.UserRepository;
@@ -16,15 +23,19 @@ public class DevDataController {
 
     private final UserRepository userRepository;
     private final WebsiteRepository websiteRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     private final Faker faker = new Faker();
 
     public DevDataController(
             UserRepository userRepository,
-            WebsiteRepository websiteRepository) {
+            WebsiteRepository websiteRepository,
+            PasswordEncoder passwordEncoder) {
 
         this.userRepository = userRepository;
         this.websiteRepository = websiteRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // Générer des users fake
@@ -36,7 +47,7 @@ public class DevDataController {
 
             User user = new User(
                     faker.name().username(),
-                    faker.internet().password()
+                    passwordEncoder.encode(faker.internet().password())
             );
 
             userRepository.save(user);
@@ -98,7 +109,7 @@ public class DevDataController {
 
             User user = new User(
                     faker.name().username(),
-                    faker.internet().password()
+                    passwordEncoder.encode(faker.internet().password())
             );
 
             userRepository.save(user);
